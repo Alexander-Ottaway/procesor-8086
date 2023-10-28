@@ -45,6 +45,48 @@ def reg_value_change(registers):
         
     return registers     
 
+# funkcja opcji #2 Kopiowanie wartosci rejestru
+def MOV(registers):
+    os.system('cls')
+    os.system('color 01')
+    display_registers()
+    selected_register = ""
+    to_home = False
+    
+    print("\nWelcome to MOV menu. Here you can copy value from one register into the other\n")
+    
+    
+    while to_home == False:
+        
+        while selected_register not in registers:
+            selected_register = input("Select a register to copy value FROM: ").lower()
+            if selected_register in registers:
+                memory = registers[selected_register]
+            else:
+                print("Not a proper input, try again...")
+        
+        selected_register = ""
+
+        while selected_register not in registers:
+            selected_register = input("Select a register to copy value TO: ").lower()
+            if selected_register in registers:
+                registers[selected_register] = memory
+                del memory
+            else:
+                print("Not a proper input, try again...")
+
+        os.system('cls')
+        print("Moving value...\n")
+        display_registers()
+        time.sleep(1.5)
+        break
+    return registers
+    
+    
+    
+     
+
+
 # START GLOWNEGO PROGRAMU
 registers = {
     "al":"00",
@@ -56,10 +98,12 @@ registers = {
     "dl":"00",
     "dh":"00"
 }
-os.system('color 02')
+
+
 
 selected_option = ""
 while selected_option != "-1":
+    os.system('color 02')
     os.system('cls')
     print("------------------------------------------------------------------------------\n")
     print("Here are the registers and their current values\n(type -1 to turn off processor):\n")
@@ -79,6 +123,9 @@ while selected_option != "-1":
         case '1':
             os.system('cls')
             registers = reg_value_change(registers)
+        case '2':
+            os.system('cls')
+            registers = MOV(registers)
         case '-1':
             break
         case default :
