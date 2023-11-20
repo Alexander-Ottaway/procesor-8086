@@ -198,6 +198,35 @@ def NOT(registers):
             
     return registers
     
+def NEG(registers):
+    os.system('cls')
+    os.system('color 0E')
+    selected_register = ""
+    while selected_register not in registers:
+        display_registers()
+        selected_register = input("Select a register to negate it's value (-1 to exit): ").lower()
+        
+        if selected_register == "-1":
+            break
+        
+        elif selected_register in registers:
+            value = digit_fix(hex(int(registers[selected_register], 16) ^ int('F' * len(registers[selected_register]), 16))[2:]).upper()
+            if value != "FF":
+                value = digit_fix(str(hex(int(value, 16) + 1))[2:].upper())
+                os.system('cls')
+            else:
+                value = "00"
+            print(f"Negating register {selected_register.upper()}'s value")
+            time.sleep(2)
+            
+        else:
+            print("Not a proper input, try again...")
+            time.sleep(1)
+            os.system('cls')
+        
+        registers[selected_register] = value
+    return registers
+
 # START GLOWNEGO PROGRAMU
 registers = {
     "al":"00",
@@ -231,6 +260,7 @@ while selected_option != "-1":
     print("4 - Increment register value (INC)")
     print("5 - Decrement register value (DEC)")
     print("6 - Invert register value (NOT)")
+    print("7 - Negate register value (NEG)")
     
     selected_option = input("Your choice --> ")
     
@@ -253,6 +283,9 @@ while selected_option != "-1":
         case '6':
             os.system('cls')
             registers = NOT(registers)
+        case '7':
+            os.system('cls')
+            registers = NEG(registers)
         case '-1':
             break
         case default :
