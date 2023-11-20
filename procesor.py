@@ -19,6 +19,12 @@ def display_registers():
     for k, v in registers.items():
         print(f"{k.upper()} = {v}h")
 
+# funkcja zamieniajaca 1 cyfrowa wartosc w 2 cyfrowa 1 -> 01
+def digit_fix(value):
+    if len(value) == 1:
+        return "0" + value
+    return value
+
 # funkcja opcji #1 Zmiana wartosci rejestru
 def reg_value_change(registers):
     os.system('cls')
@@ -48,7 +54,7 @@ def reg_value_change(registers):
 # funkcja opcji #2 Kopiowanie wartosci rejestru
 def MOV(registers):
     os.system('cls')
-    os.system('color 01')
+    os.system('color 03')
     display_registers()
     selected_register = ""
 
@@ -112,8 +118,35 @@ def XCHG(registers):
     time.sleep(1.5)
 
     return registers
-    
-     
+
+
+# funkcja opcji #4 Inkrementacja wartości rejestrów
+def INC(registers):
+    os.system('cls')
+    os.system('color 0E')
+    selected_register = ""
+    while selected_register not in registers:
+        display_registers()
+        selected_register = input("Select a register to increment it's value (-1 to exit): ").lower()
+        
+        if selected_register == "-1":
+            break
+        
+        elif selected_register in registers:
+            if registers[selected_register] != "FF":
+                registers[selected_register] = digit_fix(str(hex(int(registers[selected_register], 16) + 1))[2:].upper())
+                os.system('cls')
+                print(f"Incrementing register {selected_register.upper()}'s value")
+                time.sleep(2)
+            else:
+                registers[selected_register] = "00"
+            
+        else:
+            print("Not a proper input, try again...")
+            time.sleep(1)
+            os.system('cls')
+            
+    return registers
 
 
 # START GLOWNEGO PROGRAMU
@@ -127,6 +160,7 @@ registers = {
     "dl":"00",
     "dh":"00"
 }
+
 
 
 
@@ -145,6 +179,7 @@ while selected_option != "-1":
     print("1 - Change register value")
     print("2 - Copy register value (MOV)")
     print("3 - Exchange register value (XCHG)")
+    print("4 - Increment register value (INC)")
     
     selected_option = input("Your choice --> ")
     
@@ -158,6 +193,9 @@ while selected_option != "-1":
         case '3':
             os.system('cls')
             registers = XCHG(registers)
+        case '4':
+            os.system('inc')
+            registers = INC(registers)
         case '-1':
             break
         case default :
@@ -168,6 +206,3 @@ while selected_option != "-1":
 print("Good bye !")
 time.sleep(1)
 # KONIEC PROGRAMU
-
-
-
