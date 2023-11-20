@@ -136,10 +136,10 @@ def INC(registers):
             if registers[selected_register] != "FF":
                 registers[selected_register] = digit_fix(str(hex(int(registers[selected_register], 16) + 1))[2:].upper())
                 os.system('cls')
-                print(f"Incrementing register {selected_register.upper()}'s value")
-                time.sleep(2)
             else:
                 registers[selected_register] = "00"
+            print(f"Incrementing register {selected_register.upper()}'s value")
+            time.sleep(2)
             
         else:
             print("Not a proper input, try again...")
@@ -148,6 +148,33 @@ def INC(registers):
             
     return registers
 
+# funkcja opcji #5 Dekrementacja wartości rejestrów
+def DEC(registers):
+    os.system('cls')
+    os.system('color 0E')
+    selected_register = ""
+    while selected_register not in registers:
+        display_registers()
+        selected_register = input("Select a register to increment it's value (-1 to exit): ").lower()
+        
+        if selected_register == "-1":
+            break
+        
+        elif selected_register in registers:
+            if registers[selected_register] != "00":
+                registers[selected_register] = digit_fix(str(hex(int(registers[selected_register], 16) - 1))[2:].upper())
+                os.system('cls')
+            else:
+                registers[selected_register] = "FF"
+            print(f"Decrementing register {selected_register.upper()}'s value")
+            time.sleep(2)
+            
+        else:
+            print("Not a proper input, try again...")
+            time.sleep(1)
+            os.system('cls')
+            
+    return registers
 
 # START GLOWNEGO PROGRAMU
 registers = {
@@ -180,6 +207,7 @@ while selected_option != "-1":
     print("2 - Copy register value (MOV)")
     print("3 - Exchange register value (XCHG)")
     print("4 - Increment register value (INC)")
+    print("5 - Decrement register value (DEC)")
     
     selected_option = input("Your choice --> ")
     
@@ -194,8 +222,11 @@ while selected_option != "-1":
             os.system('cls')
             registers = XCHG(registers)
         case '4':
-            os.system('inc')
+            os.system('cls')
             registers = INC(registers)
+        case '5':
+            os.system('cls')
+            registers = DEC(registers)
         case '-1':
             break
         case default :
