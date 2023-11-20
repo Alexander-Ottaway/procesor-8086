@@ -37,7 +37,7 @@ def reg_value_change(registers):
         if selected_register in registers:
             register_input = input(f"Type in new value for register {selected_register.upper()} (double digit HEX value) --> ")
             if check_register_input(register_input): # czy wartosc jest w systemie HEX i 8 bitowa
-                registers[selected_register] = register_input
+                registers[selected_register] = register_input.upper()
             else:
                 print("Not a proper input, try again...")
         elif selected_register == '-1':
@@ -119,7 +119,6 @@ def XCHG(registers):
 
     return registers
 
-
 # funkcja opcji #4 Inkrementacja wartości rejestrów
 def INC(registers):
     os.system('cls')
@@ -155,7 +154,7 @@ def DEC(registers):
     selected_register = ""
     while selected_register not in registers:
         display_registers()
-        selected_register = input("Select a register to increment it's value (-1 to exit): ").lower()
+        selected_register = input("Select a register to decrement it's value (-1 to exit): ").lower()
         
         if selected_register == "-1":
             break
@@ -176,6 +175,29 @@ def DEC(registers):
             
     return registers
 
+def NOT(registers):
+    os.system('cls')
+    os.system('color 0E')
+    selected_register = ""
+    while selected_register not in registers:
+        display_registers()
+        selected_register = input("Select a register to invert it's value (-1 to exit): ").lower()
+        
+        if selected_register == "-1":
+            break
+        
+        elif selected_register in registers:
+            registers[selected_register] = digit_fix(hex(int(registers[selected_register], 16) ^ int('F' * len(registers[selected_register]), 16))[2:]).upper()
+            print(f"Inverting register {selected_register.upper()}'s value")
+            time.sleep(2)
+            
+        else:
+            print("Not a proper input, try again...")
+            time.sleep(1)
+            os.system('cls')
+            
+    return registers
+    
 # START GLOWNEGO PROGRAMU
 registers = {
     "al":"00",
@@ -208,6 +230,7 @@ while selected_option != "-1":
     print("3 - Exchange register value (XCHG)")
     print("4 - Increment register value (INC)")
     print("5 - Decrement register value (DEC)")
+    print("6 - Invert register value (NOT)")
     
     selected_option = input("Your choice --> ")
     
@@ -227,6 +250,9 @@ while selected_option != "-1":
         case '5':
             os.system('cls')
             registers = DEC(registers)
+        case '6':
+            os.system('cls')
+            registers = NOT(registers)
         case '-1':
             break
         case default :
