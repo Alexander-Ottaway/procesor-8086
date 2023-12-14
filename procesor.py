@@ -175,6 +175,7 @@ def DEC(registers):
             
     return registers
 
+# funkcja opcji #6
 def NOT(registers):
     os.system('cls')
     os.system('color 0E')
@@ -197,7 +198,8 @@ def NOT(registers):
             os.system('cls')
             
     return registers
-    
+
+# funkcja opcji #7    
 def NEG(registers):
     os.system('cls')
     os.system('color 0E')
@@ -227,6 +229,260 @@ def NEG(registers):
         registers[selected_register] = value
     return registers
 
+# funkcja opcji #8
+def AND(registers):
+    os.system('cls')
+    os.system('color 60')
+    display_registers()
+    selected_register = ""
+
+    print("\nWelcome to AND menu. Perform a bitwise logical AND operation between two operands and stores the result in the destination operand\n")
+    
+    def and_operation(dest_r, second_r):
+        new_value = ["0"] * 8
+        dest_r = bin(int(dest_r,16))[2:]
+        second_r = bin(int(second_r,16))[2:]
+
+        if len(dest_r) < 8:
+            for i in range(8-len(dest_r)):
+                dest_r = "0" + dest_r
+        if len(second_r) < 8:
+            for i in range(8-len(second_r)):
+                second_r = "0" + second_r
+
+        for i in range(8):
+            if dest_r[i] == "1" and second_r[i] == "1":
+                new_value[i] = "1"
+
+        new_value = str(hex(int("".join(new_value),2)))[2:]
+        if len(new_value) < 2: new_value = "0" + new_value
+        
+        return new_value.upper()
+        
+    while selected_register not in registers:
+        selected_register = input("Select the destination operand: ").lower()
+        if selected_register in registers:
+            destination_register = selected_register
+        else:
+            print("Not a proper input, try again...")
+    
+    selected_register = ""
+
+    while selected_register not in registers:
+        selected_register = input("Select the second operand: ").lower()
+        if selected_register in registers:
+            # Perform AND operation
+            registers[destination_register] = and_operation(registers[destination_register], registers[selected_register])
+        else:
+            print("Not a proper input, try again...")
+
+    os.system('cls')
+    print("Working on it...\n")
+    display_registers()
+    time.sleep(1.5)
+
+    return registers     
+
+# funkcja opcji #9
+def OR(registers):
+    os.system('cls')
+    os.system('color 60')
+    display_registers()
+    selected_register = ""
+
+    print("\nWelcome to OR menu. Perform a bitwise logical OR operation between two operands and stores the result in the destination operand\n")
+    
+    def or_operation(dest_r, second_r):
+        new_value = ["0"] * 8
+        dest_r = bin(int(dest_r,16))[2:]
+        second_r = bin(int(second_r,16))[2:]
+
+        if len(dest_r) < 8:
+            for i in range(8-len(dest_r)):
+                dest_r = "0" + dest_r
+        if len(second_r) < 8:
+            for i in range(8-len(second_r)):
+                second_r = "0" + second_r
+
+        for i in range(8):
+            if dest_r[i] == "1" or second_r[i] == "1":
+                new_value[i] = "1"
+
+        new_value = str(hex(int("".join(new_value),2)))[2:]
+        if len(new_value) < 2: new_value = "0" + new_value
+        
+        return new_value.upper()
+        
+    while selected_register not in registers:
+        selected_register = input("Select the destination operand: ").lower()
+        if selected_register in registers:
+            destination_register = selected_register
+        else:
+            print("Not a proper input, try again...")
+    
+    selected_register = ""
+
+    while selected_register not in registers:
+        selected_register = input("Select the second operand: ").lower()
+        if selected_register in registers:
+            # Perform OR operation
+            registers[destination_register] = or_operation(registers[destination_register], registers[selected_register])
+        else:
+            print("Not a proper input, try again...")
+
+    os.system('cls')
+    print("Working on it...\n")
+    display_registers()
+    time.sleep(1.5)
+
+    return registers     
+
+# funkcja opcji #10
+def XOR(registers):
+    os.system('cls')
+    os.system('color 60')
+    display_registers()
+    selected_register = ""
+
+    print("\nWelcome to XOR menu. Perform a bitwise logical XOR operation between two operands and stores the result in the destination operand\n")
+    
+    def xor_operation(dest_r, second_r):
+        new_value = ["0"] * 8
+        dest_r = bin(int(dest_r,16))[2:]
+        second_r = bin(int(second_r,16))[2:]
+
+        if len(dest_r) < 8:
+            for i in range(8-len(dest_r)):
+                dest_r = "0" + dest_r
+        if len(second_r) < 8:
+            for i in range(8-len(second_r)):
+                second_r = "0" + second_r
+
+        for i in range(8):
+            if dest_r[i] != second_r[i]:
+                new_value[i] = "1"
+
+        new_value = str(hex(int("".join(new_value),2)))[2:]
+        if len(new_value) < 2: new_value = "0" + new_value
+        
+        return new_value.upper()
+        
+    while selected_register not in registers:
+        selected_register = input("Select the destination operand: ").lower()
+        if selected_register in registers:
+            destination_register = selected_register
+        else:
+            print("Not a proper input, try again...")
+    
+    selected_register = ""
+
+    while selected_register not in registers:
+        selected_register = input("Select the second operand: ").lower()
+        if selected_register in registers:
+            # Perform XOR operation
+            registers[destination_register] = xor_operation(registers[destination_register], registers[selected_register])
+        else:
+            print("Not a proper input, try again...")
+
+    os.system('cls')
+    print("Working on it...\n")
+    display_registers()
+    time.sleep(1.5)
+
+    return registers     
+ 
+# funkcja opcji #11
+def ADD(registers):
+    os.system('cls')
+    os.system('color 60')
+    display_registers()
+    selected_register = ""
+    
+    print("\nWelcome to ADD menu. Perform addition on two operands and stores the result in the destination operand\n")
+
+    def add_operation(dest_r, second_r):
+        dest_r = int(dest_r,16)
+        second_r = int(second_r,16)
+        new_value = dest_r + second_r
+        if new_value > 255:
+            new_value -= 255 # overflow
+            
+        new_value = str(hex(new_value))[2:]
+        if len(new_value) < 2: new_value = "0" + new_value
+        
+        return new_value.upper()
+        
+
+    while selected_register not in registers:
+            selected_register = input("Select the destination operand: ").lower()
+            if selected_register in registers:
+                destination_register = selected_register
+            else:
+                print("Not a proper input, try again...")
+        
+    selected_register = ""
+
+    while selected_register not in registers:
+        selected_register = input("Select the second operand: ").lower()
+        if selected_register in registers:
+            # Perform ADD operation
+            registers[destination_register] = add_operation(registers[destination_register], registers[selected_register])
+        else:
+            print("Not a proper input, try again...")
+
+        os.system('cls')
+        print("Adding...\n")
+        display_registers()
+        time.sleep(1.5)
+        
+    return registers
+        
+# funkcja opcji #12
+def SUB(registers):
+    os.system('cls')
+    os.system('color 60')
+    display_registers()
+    selected_register = ""
+    
+    print("\nWelcome to SUB menu. Perform subtraction on two operands and stores the result in the destination operand\n")
+
+    def sub_operation(dest_r, second_r):
+        dest_r = int(dest_r,16)
+        second_r = int(second_r,16)
+        new_value = dest_r - second_r
+        if new_value < 0:
+            new_value =  256 + (new_value) # overflow
+            
+        new_value = str(hex(new_value))[2:]
+        if len(new_value) < 2: new_value = "0" + new_value
+        
+        return new_value.upper()
+        
+
+    while selected_register not in registers:
+            selected_register = input("Select the destination operand: ").lower()
+            if selected_register in registers:
+                destination_register = selected_register
+            else:
+                print("Not a proper input, try again...")
+        
+    selected_register = ""
+
+    while selected_register not in registers:
+        selected_register = input("Select the second operand: ").lower()
+        if selected_register in registers:
+            # Perform SUB operation
+            registers[destination_register] = sub_operation(registers[destination_register], registers[selected_register])
+        else:
+            print("Not a proper input, try again...")
+
+        os.system('cls')
+        print("Subtracting...\n")
+        display_registers()
+        time.sleep(1.5)
+        
+    return registers
+    
 # START GLOWNEGO PROGRAMU
 registers = {
     "al":"00",
@@ -261,9 +517,15 @@ while selected_option != "-1":
     print("5 - Decrement register value (DEC)")
     print("6 - Invert register value (NOT)")
     print("7 - Negate register value (NEG)")
+    print("8 - use AND on registers (AND)")
+    print("9 - use OR on registers (OR)")
+    print("10 - use XOR on registers (XOR)")
+    print("11 - Add register values (ADD)")
+    print("12 - Subtract register values (SUB)")
     
     selected_option = input("Your choice --> ")
     
+    # wybieranie operacji do wykonania
     match selected_option:
         case '1':
             os.system('cls')
@@ -286,6 +548,21 @@ while selected_option != "-1":
         case '7':
             os.system('cls')
             registers = NEG(registers)
+        case '8':
+            os.system('cls')
+            registers = AND(registers)
+        case '9':
+            os.system('cls')
+            registers = OR(registers)
+        case '10':
+            os.system('cls')
+            registers = XOR(registers)
+        case '11':
+            os.system('cls')
+            registers = ADD(registers)
+        case '12':
+            os.system('cls')
+            registers = SUB(registers)
         case '-1':
             break
         case default :
